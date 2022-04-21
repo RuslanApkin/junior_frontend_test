@@ -1,0 +1,87 @@
+@import url(../styles/const.css);
+
+.pl-grid {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product-tile {
+    padding: 1em;
+    background-color: var(--c-white);
+    transition: all 200ms ease-in-out;
+    opacity: 50%;
+    max-width: 340px;
+}
+
+.hoverable {
+    opacity: 100%;
+}
+
+.hoverable:hover {
+    filter: drop-shadow(0px 4px 30px rgba(29, 31, 34, 0.15));
+}
+
+.pt-cart {
+    position: absolute;
+    background-color: var(--c-primary);
+    padding: 0.75rem;
+    border-radius: 100%;
+    width: 24px;
+    height: 24px;
+    right: 1em;
+    bottom: -1.25em;
+    filter: drop-shadow(0px 6px 10px rgba(29, 31, 34, 0.15));
+    transform: scale(0);
+    transition: all 150ms ease-in-out;
+}
+
+.pt-cart:hover {
+    cursor: pointer;
+    padding: 1rem;
+    right: 0.75em;
+    bottom: -1.5em;
+}
+
+.hoverable:hover .pt-cart {
+    transform: scale(1);
+}
+
+.pt-img {
+    width: 100%;
+}
+
+.pt-title {
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+}
+
+.pt-price {
+    font-weight: 500;
+    font-size: 1.15em;
+}
+
+
+.outofstock::before {
+    content: "out of stock";
+    position: absolute;
+    inset: 0;
+}
+
+.pt-imgWrapper {
+    position: relative;
+
+}
+
+.pt-outText {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+    font-size: 1.5em;
+    font-weight: 400;
+    color: var(--c-text);
+    white-space: nowrap;
+}

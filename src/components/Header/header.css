@@ -4,6 +4,7 @@
     position: fixed;
     width: 100vw;
     background-color: var(--c-white);
+    z-index: 100;
 }
 
 .header-wrapper{

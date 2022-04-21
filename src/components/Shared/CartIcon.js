@@ -1,11 +1,12 @@
 import React from "react";
+import "./shared.css";
 
-export default function CartIcon({ color }) {
+export default function CartIcon({ color, wh }) {
   return (
     <svg
-      width="20"
-      height="19"
-      viewBox="0 0 20 19"
+      width={wh}
+      height={wh}
+      viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

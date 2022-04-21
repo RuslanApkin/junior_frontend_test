@@ -85,7 +85,7 @@ const Currency = ({ curr }) => {
 const ShoppingCart = () => {
   return (
     <>
-      <CartIcon color="#1D1F22" />
+      <CartIcon color="#1D1F22" wh="20px" />
     </>
   );
 };
