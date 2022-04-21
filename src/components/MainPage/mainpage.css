@@ -1,0 +1,7 @@
+@import "../styles/const.css";
+
+.mainpage-h2 {
+    color: var(--c-text);
+    font-weight: 400;
+    font-size: 2em;
+}

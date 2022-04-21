@@ -1,0 +1,65 @@
+@import "../styles/const.css";
+
+.header {
+    position: fixed;
+    width: 100vw;
+    background-color: var(--c-white);
+}
+
+.header-wrapper{
+    display: flex;
+    position: relative;
+    flex-direction: row;
+    justify-content: space-between;
+    width: min(100% - 15rem, 1200px);
+    margin-inline: auto;
+}
+
+.header-ul{
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    margin: 0;
+    padding: 0;
+}
+
+.header-li{
+    list-style-type: none;
+    padding: 1.85rem 1rem;
+    color: var(--c-text);
+}
+
+.navlink{
+    color: inherit;
+    font-weight: inherit;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+.selected{
+    color: var(--c-primary);
+    border-bottom: 2px solid var(--c-primary);
+    font-weight: 600;
+}
+
+.right-wrapper{
+    display: flex;
+    width: fit-content;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+}
+
+.currency-wrapper{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.header-icon{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
