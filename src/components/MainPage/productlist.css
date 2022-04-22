@@ -24,6 +24,7 @@
 
 .hoverable:hover {
     filter: drop-shadow(0px 4px 30px rgba(29, 31, 34, 0.15));
+    cursor: pointer;
 }
 
 .pt-cart {
@@ -59,18 +60,28 @@
     font-weight: 300;
     margin-bottom: 0.5rem;
     margin-top: 2rem;
+    text-decoration: underline 1px transparent;
+    text-underline-offset: 0.1rem;
+    transition: all 200ms ease-in-out;
+    width: fit-content;
+    white-space: nowrap;
+    cursor: default;
+}
+
+.hoverable .pt-title:hover {
+    opacity: 0.8;
+    text-decoration: underline 1px;
+    cursor: pointer;
 }
 
 .pt-price {
     font-weight: 500;
     font-size: 1.15em;
+    cursor: default;
 }
 
-
-.outofstock::before {
-    content: "out of stock";
-    position: absolute;
-    inset: 0;
+.hoverable .pt-price:hover {
+    cursor: pointer;
 }
 
 .pt-imgWrapper {
@@ -88,4 +99,5 @@
     font-weight: 400;
     color: var(--c-text);
     white-space: nowrap;
+    cursor: default;
 }
