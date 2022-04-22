@@ -2,9 +2,11 @@
 
 .pl-grid {
     display: flex;
-    gap: 2em;
+    column-gap: 3em;
+    row-gap: 6em;
     flex-wrap: wrap;
     justify-content: center;
+    margin: 4rem 0;
 }
 
 .product-tile {
@@ -12,7 +14,8 @@
     background-color: var(--c-white);
     transition: all 200ms ease-in-out;
     opacity: 50%;
-    max-width: 340px;
+    max-width: 390px;
+    width: max(28%, 275px);
 }
 
 .hoverable {
@@ -55,6 +58,7 @@
 .pt-title {
     font-weight: 300;
     margin-bottom: 0.5rem;
+    margin-top: 2rem;
 }
 
 .pt-price {
