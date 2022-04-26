@@ -1,6 +1,7 @@
 import React from "react";
 import CartIcon from "../Shared/CartIcon";
 import "./productlist.css";
+import { Link, useLocation } from "react-router-dom";
 
 export default function ProductList({ data }) {
   return (
@@ -13,23 +14,23 @@ export default function ProductList({ data }) {
 }
 
 const PriductTile = ({ data }) => {
-  const { title, price, currency, imgUrl, availability } = data;
+  const { name, prices, gallery, inStock, id } = data;
   return (
-    <div className={`product-tile ${availability ? "hoverable" : ""}`}>
+    <Link to={id} className={`product-tile ${!inStock ? "outOfStock" : ""}`}>
       <div className="pt-imgWrapper">
-        {!availability ? (
-          <span className="pt-outText">out of stock</span>
+        {!inStock ? <span className="pt-outText">out of stock</span> : null}
+        <img src={gallery[0]} alt="" className="pt-img" />
+        {inStock ? (
+          <div className="pt-cart">
+            <CartIcon color="white" wh="24px" />
+          </div>
         ) : null}
-        <img src={imgUrl} alt="" className="pt-img" />
-        <div className="pt-cart">
-          <CartIcon color="white" wh="24px" />
-        </div>
       </div>
-      <h3 className="pt-title">{title}</h3>
+      <h3 className="pt-title">{name}</h3>
       <span className="pt-price">
-        {currency}
-        {price}
+        {prices[0].currency.symbol}
+        {prices[0].amount}
       </span>
-    </div>
+    </Link>
   );
 };

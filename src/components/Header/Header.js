@@ -1,31 +1,37 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./header.css";
 import logo from "../../img/a-logo.svg";
 import CartIcon from "../Shared/CartIcon";
+import { useQuery, gql } from "@apollo/client";
 
-const navLinks = [
-  {
-    title: "women",
-    url: "/",
-  },
-  {
-    title: "men",
-    url: "/",
-  },
-  {
-    title: "kids",
-    url: "/",
-  },
-];
+const GETNAVLINKS = gql`
+  query getCategories {
+    categories {
+      name
+    }
+  }
+`;
 
-const currList = ["usd", "eur", "rub"];
+const GETCURR = gql`
+  query getCurrency {
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
 
 const order = ["adf", "a", "so"];
 
 export default function Header() {
-  const title = "women";
+  let title = useLocation();
+  title = title.pathname.slice(1);
   const [orderActive, setOrderActive] = useState(false);
+  const { loading, error, data } = useQuery(GETNAVLINKS);
+
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   return (
     <>
@@ -33,14 +39,14 @@ export default function Header() {
         <div className="header-wrapper">
           <nav>
             <ul className="header-ul">
-              {navLinks.map((link) => (
+              {data.categories.map((cat) => (
                 <li
                   className={`header-li ${
-                    link.title === title ? "selected" : ""
+                    cat.name === title ? "selected" : ""
                   }`}
                 >
-                  <Link to={link.url} className="navlink">
-                    {link.title}
+                  <Link to={cat.name} className="navlink">
+                    {cat.name}
                   </Link>
                 </li>
               ))}
@@ -51,7 +57,7 @@ export default function Header() {
           </Link>
 
           <div className="right-wrapper">
-            <Currency curr="$" currlist={currList} />
+            <Currency />
             <ShoppingCart
               orderActive={orderActive}
               setOrderActive={setOrderActive}
@@ -90,12 +96,13 @@ const Icon = (props) => {
   );
 };
 
-const Currency = ({ curr, currlist }) => {
+const Currency = () => {
   const [active, setActive] = useState(false);
+  const { data } = useQuery(GETCURR);
   return (
     <div className="currency-wrapper">
       <button className="currency-btn" onClick={() => setActive(!active)}>
-        <span>{curr}</span>
+        <span>$</span>
         <svg
           width="8"
           height="4"
@@ -112,12 +119,18 @@ const Currency = ({ curr, currlist }) => {
         </svg>
       </button>
       {active ? (
-        <div className="currency-list">
-          <ul>
-            {currlist.map((curr) => (
-              <li>{curr}</li>
+        <div>
+          <ul className="currency-list">
+            {data.currencies.map((curr) => (
+              <li>
+                {curr.symbol} {curr.label}
+              </li>
             ))}
           </ul>
+          <span
+            className="currency-cover"
+            onClick={() => setActive(false)}
+          ></span>
         </div>
       ) : null}
     </div>

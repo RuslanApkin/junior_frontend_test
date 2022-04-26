@@ -8,7 +8,9 @@ function App() {
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<MainPage />} />
+        <Route path="/">
+          <Route path=":category" element={<MainPage />} />
+        </Route>
       </Routes>
     </>
   );
