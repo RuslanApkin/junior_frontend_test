@@ -10,3 +10,7 @@ body {
   width: min(100vw - 15rem, 1200px);
   margin-inline: auto;
 }
+
+a, div, h1, h2, h3, span, ul {
+  color: var(--c-text);
+}

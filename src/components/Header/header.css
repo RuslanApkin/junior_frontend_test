@@ -28,7 +28,7 @@
     position: relative;
     list-style-type: none;
     padding: 1.85rem 1rem;
-    color: var(--c-text);
+     ;
 }
 
 .navlink{
@@ -139,7 +139,7 @@
 
 .currency-list li, .sc-order li {
     list-style-type: none;
-    color: var(--c-text);
+     ;
     text-transform: uppercase;
     white-space: nowrap;
     cursor: pointer;

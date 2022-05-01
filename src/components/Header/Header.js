@@ -26,7 +26,8 @@ const order = ["adf", "a", "so"];
 
 export default function Header() {
   let title = useLocation();
-  title = title.pathname.slice(1);
+  title = title.pathname.split("/")[1];
+  title = !title ? "all" : title;
   const [orderActive, setOrderActive] = useState(false);
   const { loading, error, data } = useQuery(GETNAVLINKS);
 

@@ -1,0 +1,160 @@
+@import url(../styles/const.css);
+
+.thumbnail{
+    width: 4em;
+    height: 4em;
+    object-fit: cover;
+}
+
+.thumbnail-input{
+    display: none;
+}
+
+.thumbnail-input:checked + .thumbnail {
+    opacity: 40%;
+}
+
+.choose-img {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.product-wrapper {
+    position: relative;
+    display: flex;
+    gap: 5em;
+    padding: 0 6em;
+    margin: 5em 0;
+}
+
+.product-img {
+    width: max(15em, 50%);
+    height: 30em;
+    object-fit: contain;
+    object-position: 50 50;
+}
+
+.product-addForm {
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+}
+
+.product-brand {
+    font-size: 2em;
+    font-weight: 550;
+    font-style: italic;
+    margin: 0;
+}
+
+.product-name {
+    font-size: 2em;
+    font-weight: 300;
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+.product-attribute {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em
+}
+
+.product-attrName {
+    font-size: 1.25em;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-style: italic;
+}
+
+.price-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.product-price {
+    font-weight: 600;
+    font-size: 1.75em;
+    font-style: italic;
+}
+
+.product-btn {
+    background-color: var(--c-primary);
+    border: none;
+    color: var(--c-white);
+    padding: 1rem 0;
+    font-size: 1em;
+    text-transform: uppercase;
+    transition: all 200ms ease-in-out;
+}
+
+.product-out {
+    text-align: center;
+    opacity: 50%;
+}
+
+.product-add:hover {
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.product-desc {
+    font-style: italic;
+}
+
+.attr-input {
+    flex-shrink: 0;
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.attr-items {
+    display: flex;
+    flex-direction: row;
+}
+
+.attr-item {
+    cursor: pointer;
+    border: 1px solid var(--c-black);
+    transition: all 200ms ease-in-out;
+    box-sizing: border-box;
+    position: relative;
+    margin-right: 0.5rem;
+}
+
+.attr-itemText {
+    font-style: italic;
+    text-transform: uppercase;
+    width: 4rem;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.attr-itemColor {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.attr-input:checked + .attr-itemText {
+    background-color: var(--c-black);
+    color: var(--c-white) !important;
+}
+
+.attr-input:checked + .attr-itemColor {
+    opacity: 30%;
+}
+
+.attr-itemOut {
+    position: absolute;
+    inset: -1px;
+    background-color: var(--c-white);
+    opacity: 50%;
+    cursor: auto;
+}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./mainpage.css";
 import ProductList from "./ProductList";
 import { gql, useQuery } from "@apollo/client";
@@ -38,6 +38,7 @@ const GETPRODUCTS = gql`
 export default function MainPage() {
   let name = useLocation();
   name = name.pathname.slice(1);
+  name = !name ? "all" : name;
   let CategoryInput = { title: name };
 
   const { loading, error, data } = useQuery(GETPRODUCTS, {
@@ -56,8 +57,6 @@ export default function MainPage() {
         <p>Error :(</p>
       </div>
     );
-
-  console.log(data.category.name);
 
   return (
     <div className="page-wrapper">
