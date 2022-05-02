@@ -1,6 +1,7 @@
 import { gql, useQuery } from "@apollo/client";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { Context } from "../Store";
 import "./productpage.css";
 
 const GETPRODUCT = gql`
@@ -43,6 +44,7 @@ export default function ProductPage() {
   const handleChange = (event) => {
     setImage(event.target.value);
   };
+  const [curr, setCurr] = useContext(Context);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   return (
@@ -85,7 +87,7 @@ export default function ProductPage() {
           alt="gallery-img"
           className="product-img"
         />
-        <div>
+        <div className="product-info">
           <h2 className="product-brand">{data.product.brand}</h2>
           <h3 className="product-name">{data.product.name}</h3>
           <form className="product-addForm">
@@ -128,7 +130,12 @@ export default function ProductPage() {
             <div className="price-wrapper">
               <span className="product-attrName">Price</span>
               <span className="product-price">
-                {data.product.prices[0].amount}
+                {curr.symbol}
+                {
+                  data.product.prices.find(
+                    ({ currency }) => curr.label === currency.label
+                  ).amount
+                }
               </span>
             </div>
             {data.product.inStock ? (

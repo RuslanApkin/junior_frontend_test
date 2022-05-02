@@ -30,8 +30,13 @@
     margin: 5em 0;
 }
 
+.product-info {
+    width: 100%;
+}
+
 .product-img {
     width: max(15em, 50%);
+    flex: 0 0 50%;
     height: 30em;
     object-fit: contain;
     object-position: 50 50;

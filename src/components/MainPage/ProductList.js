@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import CartIcon from "../Shared/CartIcon";
 import "./productlist.css";
 import { Link } from "react-router-dom";
+import { Context } from "../Store";
 
 export default function ProductList({ data }) {
   return (
@@ -15,6 +16,7 @@ export default function ProductList({ data }) {
 
 const PriductTile = ({ data }) => {
   const { name, prices, gallery, inStock, id } = data;
+  const [curr, setCurr] = useContext(Context);
   return (
     <Link to={id} className={`product-tile ${!inStock ? "outOfStock" : ""}`}>
       <div className="pt-imgWrapper">
@@ -28,8 +30,8 @@ const PriductTile = ({ data }) => {
       </div>
       <h3 className="pt-title">{name}</h3>
       <span className="pt-price">
-        {prices[0].currency.symbol}
-        {prices[0].amount}
+        {curr.symbol}
+        {prices.find(({ currency }) => curr.label === currency.label).amount}
       </span>
     </Link>
   );

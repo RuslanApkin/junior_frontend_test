@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./header.css";
 import logo from "../../img/a-logo.svg";
 import CartIcon from "../Shared/CartIcon";
 import { useQuery, gql } from "@apollo/client";
+import { Context } from "../Store";
 
 const GETNAVLINKS = gql`
   query getCategories {
@@ -99,11 +100,14 @@ const Icon = (props) => {
 
 const Currency = () => {
   const [active, setActive] = useState(false);
-  const { data } = useQuery(GETCURR);
+  const { loading, error, data } = useQuery(GETCURR);
+  const [currency, setCurrency] = useContext(Context);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error</p>;
   return (
     <div className="currency-wrapper">
       <button className="currency-btn" onClick={() => setActive(!active)}>
-        <span>$</span>
+        <span>{currency.symbol}</span>
         <svg
           width="8"
           height="4"
@@ -123,7 +127,12 @@ const Currency = () => {
         <div>
           <ul className="currency-list">
             {data.currencies.map((curr) => (
-              <li>
+              <li
+                onClick={() => {
+                  setCurrency(curr);
+                  setActive(false);
+                }}
+              >
                 {curr.symbol} {curr.label}
               </li>
             ))}
