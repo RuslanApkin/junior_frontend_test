@@ -1,11 +1,10 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer } from "react";
+import Reducer from "./Reducer";
 
 const Store = ({ children, initialState }) => {
-  const [currency, setCurrency] = useState(initialState);
+  const [state, dispatch] = useReducer(Reducer, initialState);
   return (
-    <Context.Provider value={[currency, setCurrency]}>
-      {children}
-    </Context.Provider>
+    <Context.Provider value={[state, dispatch]}>{children}</Context.Provider>
   );
 };
 

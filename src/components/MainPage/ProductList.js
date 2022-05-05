@@ -16,7 +16,7 @@ export default function ProductList({ data }) {
 
 const PriductTile = ({ data }) => {
   const { name, prices, gallery, inStock, id } = data;
-  const [curr, setCurr] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
   return (
     <Link to={id} className={`product-tile ${!inStock ? "outOfStock" : ""}`}>
       <div className="pt-imgWrapper">
@@ -30,8 +30,11 @@ const PriductTile = ({ data }) => {
       </div>
       <h3 className="pt-title">{name}</h3>
       <span className="pt-price">
-        {curr.symbol}
-        {prices.find(({ currency }) => curr.label === currency.label).amount}
+        {state.currency.symbol}
+        {
+          prices.find(({ currency }) => state.currency.label === currency.label)
+            .amount
+        }
       </span>
     </Link>
   );

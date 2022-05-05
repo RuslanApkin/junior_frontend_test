@@ -101,13 +101,13 @@ const Icon = (props) => {
 const Currency = () => {
   const [active, setActive] = useState(false);
   const { loading, error, data } = useQuery(GETCURR);
-  const [currency, setCurrency] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error</p>;
   return (
     <div className="currency-wrapper">
       <button className="currency-btn" onClick={() => setActive(!active)}>
-        <span>{currency.symbol}</span>
+        <span>{state.currency.symbol}</span>
         <svg
           width="8"
           height="4"
@@ -129,7 +129,7 @@ const Currency = () => {
             {data.currencies.map((curr) => (
               <li
                 onClick={() => {
-                  setCurrency(curr);
+                  dispatch({ type: "SET_CURR", payload: curr });
                   setActive(false);
                 }}
               >

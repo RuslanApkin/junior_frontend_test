@@ -4,6 +4,7 @@
     width: 4em;
     height: 4em;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .thumbnail-input{
@@ -88,6 +89,7 @@
 }
 
 .product-btn {
+    position: relative;
     background-color: var(--c-primary);
     border: none;
     color: var(--c-white);
@@ -97,14 +99,29 @@
     transition: all 200ms ease-in-out;
 }
 
-.product-out {
-    text-align: center;
-    opacity: 50%;
-}
-
 .product-add:hover {
     cursor: pointer;
     opacity: 80%;
+}
+
+/* .product-add::after {
+    content: "fill the form";
+    position: absolute;
+    color: var(--c-text);
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+    top: 0;
+    right: 0;
+    transform: translate(0, -100%);
+}
+
+.product-add:hover:disabled::after, .product-add:hover {
+    opacity: 1;
+} */
+
+.product-out {
+    text-align: center;
+    opacity: 50%;
 }
 
 .product-desc {
@@ -112,7 +129,6 @@
 }
 
 .attr-input {
-    flex-shrink: 0;
     width: 0;
     height: 0;
     margin: 0;

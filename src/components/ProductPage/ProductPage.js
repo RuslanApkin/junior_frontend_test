@@ -1,5 +1,5 @@
 import { gql, useQuery } from "@apollo/client";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "../Store";
 import "./productpage.css";
@@ -7,6 +7,7 @@ import "./productpage.css";
 const GETPRODUCT = gql`
   query ($id: String!) {
     product(id: $id) {
+      id
       name
       inStock
       gallery
@@ -41,10 +42,29 @@ export default function ProductPage() {
     variables: { id: urlId },
   });
   const [imageUrl, setImage] = useState();
+  const [formValues, setForm] = useState();
   const handleChange = (event) => {
     setImage(event.target.value);
   };
-  const [curr, setCurr] = useContext(Context);
+  const [state, dispatch] = useContext(Context);
+  const addToCart = (e) => {
+    e.preventDefault();
+    dispatch({
+      type: "ADD_PRODUCT",
+      payload: { id: data.product.id, ...formValues },
+    });
+  };
+
+  useEffect(() => {
+    if (data) {
+      const initialValues = {};
+      data.product.attributes.map(
+        (attr) => (initialValues[attr.id] = attr.items[0])
+      );
+      setForm(initialValues);
+    }
+  }, [loading]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
   return (
@@ -90,7 +110,11 @@ export default function ProductPage() {
         <div className="product-info">
           <h2 className="product-brand">{data.product.brand}</h2>
           <h3 className="product-name">{data.product.name}</h3>
-          <form className="product-addForm">
+          <form
+            id="addForm"
+            className="product-addForm"
+            onSubmit={(e) => addToCart(e)}
+          >
             {data.product.attributes.map((attr) => (
               <div className="product-attribute">
                 <span className="product-attrName">{attr.name}</span>
@@ -99,11 +123,22 @@ export default function ProductPage() {
                     <>
                       <input
                         type="radio"
-                        name={attr.name}
-                        id={attr.name + item.id}
+                        name={attr.id}
+                        id={attr.id + item.id}
                         required
                         className="attr-input"
                         disabled={!data.product.inStock}
+                        checked={
+                          formValues
+                            ? formValues[attr.id].id === item.id
+                            : false
+                        }
+                        onChange={() => {
+                          setForm((formValues) => ({
+                            ...formValues,
+                            [attr.name]: item,
+                          }));
+                        }}
                       ></input>
                       <label
                         className={
@@ -111,7 +146,7 @@ export default function ProductPage() {
                             ? "attr-item attr-itemColor"
                             : "attr-item attr-itemText"
                         }
-                        for={attr.name + item.id}
+                        for={attr.id + item.id}
                         style={{
                           backgroundColor:
                             attr.type === "swatch" ? item.value : null,
@@ -130,10 +165,10 @@ export default function ProductPage() {
             <div className="price-wrapper">
               <span className="product-attrName">Price</span>
               <span className="product-price">
-                {curr.symbol}
+                {state.currency.symbol}
                 {
                   data.product.prices.find(
-                    ({ currency }) => curr.label === currency.label
+                    ({ currency }) => state.currency.label === currency.label
                   ).amount
                 }
               </span>
