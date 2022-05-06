@@ -5,32 +5,15 @@ import logo from "../../img/a-logo.svg";
 import CartIcon from "../Shared/CartIcon";
 import { useQuery, gql } from "@apollo/client";
 import { Context } from "../Store";
-
-const GETNAVLINKS = gql`
-  query getCategories {
-    categories {
-      name
-    }
-  }
-`;
-
-const GETCURR = gql`
-  query getCurrency {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
-
-const order = ["adf", "a", "so"];
+import { GETCATEGORIES, GETCURR, GETPRODUCT } from "../Shared/shared";
 
 export default function Header() {
   let title = useLocation();
   title = title.pathname.split("/")[1];
   title = !title ? "all" : title;
   const [orderActive, setOrderActive] = useState(false);
-  const { loading, error, data } = useQuery(GETNAVLINKS);
+  const { loading, error, data } = useQuery(GETCATEGORIES);
+  const [state, dispatch] = useContext(Context);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -63,6 +46,7 @@ export default function Header() {
             <ShoppingCart
               orderActive={orderActive}
               setOrderActive={setOrderActive}
+              state={state}
             />
           </div>
         </div>
@@ -76,11 +60,20 @@ export default function Header() {
             ></span>
             <div className="page-wrapper cs-orderList">
               <div className="sc-order">
-                <ul>
-                  {order.map((curr) => (
-                    <li>{curr}</li>
-                  ))}
-                </ul>
+                {state.cart.length ? (
+                  <>
+                    <span>My Bag, {state.cart.length} items</span>
+                    <ul>
+                      {state.cart.map((item) => (
+                        <li className="sc-itemWrapper">
+                          <SCItem item={item} />
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : (
+                  <span className="sc-empty">it's still empty :(</span>
+                )}
               </div>
             </div>
           </div>
@@ -147,12 +140,29 @@ const Currency = () => {
   );
 };
 
-const ShoppingCart = ({ orderActive, setOrderActive }) => {
+const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
   return (
     <div className="sc-wrapper">
       <button className="sc-btn" onClick={() => setOrderActive(!orderActive)}>
         <CartIcon color="#1D1F22" wh="20px" />
+        <span
+          className={`sc-notification ${
+            state.cart.length === 0 ? "sc-notification--hide" : ""
+          }`}
+        >
+          {state.cart.length}
+        </span>
       </button>
     </div>
   );
+};
+
+const SCItem = ({ item }) => {
+  const { loading, error, data } = useQuery(GETPRODUCT, {
+    variables: { id: item.id },
+  });
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+
+  return <div>{data.product.name}</div>;
 };

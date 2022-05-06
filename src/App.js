@@ -3,18 +3,10 @@ import Header from "./components/Header/Header";
 import { Routes, Route, Navigate } from "react-router-dom";
 import MainPage from "./components/MainPage/MainPage";
 import ProductPage from "./components/ProductPage/ProductPage";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Store from "./components/Store";
 import CartPage from "./components/Cart/CartPage";
-
-const GETCURR = gql`
-  query getCurrency {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
+import { GETCURR } from "./components/Shared/shared";
 
 const initialState = {
   currency: null,
@@ -23,23 +15,24 @@ const initialState = {
 
 function App() {
   const { loading, error, data } = useQuery(GETCURR);
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error...</p>;
-  initialState.currency = data.currencies.find(
-    ({ label }) => label === window.localStorage.getItem("curr")
-  )
-    ? data.currencies.find(
+  useEffect(() => {
+    if (data) {
+      initialState.currency = data.currencies.find(
         ({ label }) => label === window.localStorage.getItem("curr")
       )
-    : data.currencies[0];
-  window.localStorage
-    .getItem("cart")
-    .split(", ")
-    .map(
-      (str) => (initialState.cart = initialState.cart.concat(JSON.parse(str)))
-    );
-
-  console.log(initialState);
+        ? data.currencies.find(
+            ({ label }) => label === window.localStorage.getItem("curr")
+          )
+        : data.currencies[0];
+      if (window.localStorage.getItem("cart"))
+        window.localStorage
+          .getItem("cart")
+          .split(", ")
+          .map((str) => initialState.cart.push(JSON.parse(str)));
+    }
+  }, [loading]);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error...</p>;
   return (
     <Store initialState={initialState}>
       <Header />

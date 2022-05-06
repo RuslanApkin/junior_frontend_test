@@ -1,39 +1,9 @@
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Context } from "../Store";
 import "./productpage.css";
-
-const GETPRODUCT = gql`
-  query ($id: String!) {
-    product(id: $id) {
-      id
-      name
-      inStock
-      gallery
-      description
-      category
-      attributes {
-        id
-        name
-        type
-        items {
-          displayValue
-          value
-          id
-        }
-      }
-      prices {
-        currency {
-          label
-          symbol
-        }
-        amount
-      }
-      brand
-    }
-  }
-`;
+import { GETPRODUCT } from "../Shared/shared";
 
 export default function ProductPage() {
   let urlId = useLocation();
@@ -43,23 +13,28 @@ export default function ProductPage() {
   });
   const [imageUrl, setImage] = useState();
   const [formValues, setForm] = useState();
+  const [added, setAdded] = useState("");
   const handleChange = (event) => {
     setImage(event.target.value);
   };
   const [state, dispatch] = useContext(Context);
   const addToCart = (e) => {
-    e.preventDefault();
     dispatch({
       type: "ADD_PRODUCT",
-      payload: { id: data.product.id, ...formValues },
+      payload: { id: urlId, attr: formValues },
     });
+    setAdded(true);
+    setTimeout(() => {
+      setAdded(false);
+    }, 1000);
+    e.preventDefault();
   };
 
   useEffect(() => {
     if (data) {
       const initialValues = {};
       data.product.attributes.map(
-        (attr) => (initialValues[attr.id] = attr.items[0])
+        (attr) => (initialValues[attr.id] = attr.items[0].id)
       );
       setForm(initialValues);
     }
@@ -129,14 +104,12 @@ export default function ProductPage() {
                         className="attr-input"
                         disabled={!data.product.inStock}
                         checked={
-                          formValues
-                            ? formValues[attr.id].id === item.id
-                            : false
+                          formValues ? formValues[attr.id] === item.id : false
                         }
                         onChange={() => {
                           setForm((formValues) => ({
                             ...formValues,
-                            [attr.name]: item,
+                            [attr.name]: item.id,
                           }));
                         }}
                       ></input>
@@ -174,7 +147,9 @@ export default function ProductPage() {
               </span>
             </div>
             {data.product.inStock ? (
-              <button className="product-btn product-add">Add to Cart</button>
+              <button className="product-btn product-add">
+                {added ? "Added!" : "Add to Cart"}
+              </button>
             ) : (
               <div className="product-btn product-out">Out of stock</div>
             )}

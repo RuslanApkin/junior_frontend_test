@@ -1,39 +1,9 @@
 import React from "react";
 import "./mainpage.css";
 import ProductList from "./ProductList";
-import { gql, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router-dom";
-
-const GETPRODUCTS = gql`
-  query getCategory($CategoryInput: CategoryInput) {
-    category(input: $CategoryInput) {
-      name
-      products {
-        id
-        name
-        inStock
-        gallery
-        attributes {
-          id
-          name
-          type
-          items {
-            displayValue
-            value
-            id
-          }
-        }
-        prices {
-          currency {
-            label
-            symbol
-          }
-          amount
-        }
-      }
-    }
-  }
-`;
+import { GETPRODUCTS } from "../Shared/shared";
 
 export default function MainPage() {
   let name = useLocation();

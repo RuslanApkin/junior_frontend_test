@@ -5,18 +5,19 @@ import { Link } from "react-router-dom";
 import { Context } from "../Store";
 
 export default function ProductList({ data }) {
+  const [state, dispatch] = useContext(Context);
   return (
     <div className="pl-grid">
       {data.map((data) => (
-        <PriductTile data={data} />
+        <PriductTile data={data} state={state} />
       ))}
     </div>
   );
 }
 
-const PriductTile = ({ data }) => {
+const PriductTile = ({ data, state }) => {
   const { name, prices, gallery, inStock, id } = data;
-  const [state, dispatch] = useContext(Context);
+
   return (
     <Link to={id} className={`product-tile ${!inStock ? "outOfStock" : ""}`}>
       <div className="pt-imgWrapper">

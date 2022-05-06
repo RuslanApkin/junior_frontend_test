@@ -7,16 +7,29 @@ const Reducer = (state, action) => {
         currency: action.payload,
       };
     case "ADD_PRODUCT":
-      const prev = window.localStorage.getItem("cart")
-        ? window.localStorage.getItem("cart") + ", "
-        : "";
+      const cartItems = state.cart;
+      let hashId = action.payload.id;
+      const attr = action.payload.attr;
+      Object.keys(attr).every((key) => (hashId += attr[key]));
+      const itemPos = cartItems.findIndex(({ hash }) => hash === hashId);
+      if (itemPos >= 0) {
+        cartItems[itemPos].qty += 1;
+      } else
+        cartItems.push({
+          hash: hashId,
+          id: action.payload.id,
+          attrs: { ...action.payload.attr },
+          qty: 1,
+        });
+
+      console.log(JSON.stringify(cartItems));
       window.localStorage.setItem(
         "cart",
-        prev + JSON.stringify(action.payload)
+        cartItems.map((item) => JSON.stringify(item)).join(", ")
       );
       return {
         ...state,
-        cart: state.cart ? state.cart.concat(action.payload) : [action.payload],
+        cart: cartItems,
       };
     case "REMOVE_PRODUCT":
       window.localStorage.setItem(
@@ -26,6 +39,8 @@ const Reducer = (state, action) => {
         ...state,
         cart: state.cart.filter((post) => post.id !== action.payload),
       };
+    case "RESET":
+      return { ...state, cart: [] };
     default:
       return state;
   }

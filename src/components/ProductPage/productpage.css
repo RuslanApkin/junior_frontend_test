@@ -104,21 +104,6 @@
     opacity: 80%;
 }
 
-/* .product-add::after {
-    content: "fill the form";
-    position: absolute;
-    color: var(--c-text);
-    opacity: 0;
-    transition: all 200ms ease-in-out;
-    top: 0;
-    right: 0;
-    transform: translate(0, -100%);
-}
-
-.product-add:hover:disabled::after, .product-add:hover {
-    opacity: 1;
-} */
-
 .product-out {
     text-align: center;
     opacity: 50%;
@@ -129,10 +114,7 @@
 }
 
 .attr-input {
-    width: 0;
-    height: 0;
-    margin: 0;
-    padding: 0;
+    display: none;
 }
 
 .attr-items {
@@ -158,6 +140,7 @@
 }
 
 .attr-itemColor {
+    position: relative;
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
@@ -168,8 +151,22 @@
     color: var(--c-white) !important;
 }
 
-.attr-input:checked + .attr-itemColor {
-    opacity: 30%;
+.attr-itemColor::after {
+    content: "✔";
+    font-size: 1.25em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    inset: -1px;
+    position: absolute;
+    background-color: var(--c-white);
+    border-radius: inherit;
+    opacity: 0;
+    transition: all 200ms ease-in-out;
+}
+
+.attr-input:checked + .attr-itemColor::after {
+    opacity: 40%;
 }
 
 .attr-itemOut {
