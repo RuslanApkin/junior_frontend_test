@@ -34,7 +34,7 @@ export default function ProductPage() {
     if (data) {
       const initialValues = {};
       data.product.attributes.map(
-        (attr) => (initialValues[attr.id] = attr.items[0].id)
+        (attr) => (initialValues[attr.id] = attr.items[0].value)
       );
       setForm(initialValues);
     }
@@ -104,12 +104,14 @@ export default function ProductPage() {
                         className="attr-input"
                         disabled={!data.product.inStock}
                         checked={
-                          formValues ? formValues[attr.id] === item.id : false
+                          formValues
+                            ? formValues[attr.id] === item.value
+                            : false
                         }
                         onChange={() => {
                           setForm((formValues) => ({
                             ...formValues,
-                            [attr.name]: item.id,
+                            [attr.id]: item.value,
                           }));
                         }}
                       ></input>

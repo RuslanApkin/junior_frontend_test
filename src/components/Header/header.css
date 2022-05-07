@@ -182,6 +182,13 @@
     max-width: fit-content;
     right: 0;
     z-index: 10;
+    padding: 1rem;
+    max-height: calc(100vh - 10em);
+    overflow-y: auto;
+}
+
+.sc-orderList {
+    padding-top: 1rem;
 }
 
 .sc-orderWrapper {
@@ -203,3 +210,55 @@
 .sc-orderCover:hover {
     cursor: pointer;
 }
+
+/* shopping cart item styling */
+
+.sc-itemWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.cs-itemInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 10em;
+}
+
+.sc-itemAttrs {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25em;
+}
+
+.sc-itemAttr {
+    font-size: 0.875em;
+    padding: 0.25rem;
+    border: 1px solid var(--c-black);
+    min-width: 1rem;
+    text-align: center;
+}
+
+.sc-itemAttrColor {
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--c-black);
+    border-radius: 50%;
+}
+
+.sc-itemQtyWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sc-itemImgWrapper img {
+    width: 6em;
+    height: 8em;
+    object-fit: contain;
+}
+
+.sc-orderBtnWrapper {}
