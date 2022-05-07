@@ -12,7 +12,7 @@
     position: relative;
     flex-direction: row;
     justify-content: space-between;
-    width: min(100% - 15rem, 1200px);
+    width: min(100% - 15em, 1200px);
     margin-inline: auto;
 }
 
@@ -27,8 +27,7 @@
 .header-li{
     position: relative;
     list-style-type: none;
-    padding: 1.85rem 1rem;
-     ;
+    padding: 1.85em 1em;
 }
 
 .navlink{
@@ -64,11 +63,11 @@
     width: fit-content;
     flex-direction: row;
     align-items: center;
-    gap: 1rem;
+    gap: 1em;
 }
 
 .currency-btn{
-    font-size: 1.125em;
+    font-size: 1.125rem;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -76,38 +75,6 @@
     background-color: transparent;
     border: none;
     transition: all 200ms ease-in-out;
-}
-
-.sc-btn {
-    background-color: transparent;
-    border: none;
-    transition: all 100ms ease-in-out;
-    position: relative;
-}
-
-.sc-btn:hover, .currency-btn:hover, .navlink:hover{
-    cursor: pointer;
-    opacity: 50%;
-}
-
-.sc-notification {
-    position: absolute;
-    background-color: var(--c-black);
-    color: var(--c-white);
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: -10px;
-    right: -10px;
-    transition: transform 100ms ease-in-out;
-    font-weight: 600;
-}
-
-.sc-notification--hide {
-    transform: scale(0);
 }
 
 .header-icon{
@@ -150,17 +117,8 @@
     cursor: pointer;
 }
 
-.sc-order ul {
-    margin: 0;
-    padding-left: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 1.25em
-}
-
-.currency-list li, .sc-order li {
+.currency-list li {
     list-style-type: none;
-     ;
     text-transform: uppercase;
     white-space: nowrap;
     cursor: pointer;
@@ -170,95 +128,3 @@
 .currency-list li:hover {
     opacity: 50%;
 }
-
-.cs-orderList {
-    position: relative;
-}
-
-.sc-order {
-    position: absolute;
-    background-color: var(--c-white);
-    top: 5rem;
-    max-width: fit-content;
-    right: 0;
-    z-index: 10;
-    padding: 1rem;
-    max-height: calc(100vh - 10em);
-    overflow-y: auto;
-}
-
-.sc-orderList {
-    padding-top: 1rem;
-}
-
-.sc-orderWrapper {
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
-}
-
-.sc-orderCover {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(29, 31, 34, 0.2);
-}
-
-.sc-orderCover:hover {
-    cursor: pointer;
-}
-
-/* shopping cart item styling */
-
-.sc-itemWrapper {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 1rem;
-}
-
-.cs-itemInfo {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    width: 10em;
-}
-
-.sc-itemAttrs {
-    display: flex;
-    flex-direction: row;
-    gap: 0.25em;
-}
-
-.sc-itemAttr {
-    font-size: 0.875em;
-    padding: 0.25rem;
-    border: 1px solid var(--c-black);
-    min-width: 1rem;
-    text-align: center;
-}
-
-.sc-itemAttrColor {
-    width: 24px;
-    height: 24px;
-    border: 1px solid var(--c-black);
-    border-radius: 50%;
-}
-
-.sc-itemQtyWrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.sc-itemImgWrapper img {
-    width: 6em;
-    height: 8em;
-    object-fit: contain;
-}
-
-.sc-orderBtnWrapper {}

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import "./header.css";
+import "./cart.css";
 import logo from "../../img/a-logo.svg";
 import CartIcon from "../Shared/CartIcon";
 import { useQuery } from "@apollo/client";
@@ -92,21 +93,43 @@ export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
             className="sc-orderCover"
             onClick={() => setOrderActive(!orderActive)}
           ></span>
-          <div className="page-wrapper cs-orderList">
+          <div className="page-wrapper cs-orderWrapper">
             <div className="sc-order">
               {state.cart.length ? (
                 <>
                   <span className="cs-orderQty">
-                    My Bag, {state.cart.length} items
+                    <b>My Bag,</b> {state.cart.length} items
                   </span>
-                  <ul className="sc-orderList">
-                    {state.cart.map((item) => (
-                      <SCItem item={item} curr={state.currency} />
-                    ))}
-                  </ul>
+                  <div className="sc-orderListWrapper">
+                    <ul className="sc-orderList">
+                      {state.cart.map((item) => (
+                        <SCItem
+                          item={item}
+                          curr={state.currency}
+                          setOrderActive={setOrderActive}
+                        />
+                      ))}
+                    </ul>
+                  </div>
+                  <div className="sc-orderTotal">
+                    <span>Total</span>
+                    <span>$100.00</span>
+                  </div>
                   <div className="sc-orderBtnWrapper">
-                    <Link to="all/cart">View bag</Link>
-                    <Link to="all/cart">Check out</Link>
+                    <Link
+                      to="all/cart"
+                      className="cs-orderBtnBag"
+                      onClick={() => setOrderActive(false)}
+                    >
+                      View bag
+                    </Link>
+                    <Link
+                      to="all/cart"
+                      className="cs-orderBtnCheck"
+                      onClick={() => setOrderActive(false)}
+                    >
+                      Check out
+                    </Link>
                   </div>
                 </>
               ) : (
@@ -120,7 +143,8 @@ export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
   );
 };
 
-export const SCItem = ({ item, curr }) => {
+export const SCItem = ({ item, curr, setOrderActive }) => {
+  const [state, dispatch] = useContext(Context);
   const { loading, error, data } = useQuery(GETPRODUCT, {
     variables: { id: item.id },
   });
@@ -130,7 +154,13 @@ export const SCItem = ({ item, curr }) => {
   return (
     <li className="sc-itemWrapper">
       <div className="cs-itemInfo">
-        <span className="sc-itemName">{data.product.name}</span>
+        <Link
+          to={"all/" + item.id}
+          className="sc-itemName"
+          onClick={() => setOrderActive(false)}
+        >
+          {data.product.name}
+        </Link>
         <span className="sc-itemPrice">
           {curr.symbol}
           {
@@ -156,9 +186,19 @@ export const SCItem = ({ item, curr }) => {
         </div>
       </div>
       <div className="sc-itemQtyWrapper">
-        <button className="sc-itemQtyBtn">+</button>
+        <button
+          className="sc-itemQtyBtn"
+          onClick={() => {
+            dispatch({ type: "INC_PRODUCT", payload: item });
+          }}
+        ></button>
         <span className="sc-itemQtyValue">{item.qty}</span>
-        <button className="sc-itemQtyBtn">-</button>
+        <button
+          className="sc-itemQtyBtn"
+          onClick={() => {
+            dispatch({ type: "REMOVE_PRODUCT", payload: item.hash });
+          }}
+        ></button>
       </div>
       <div className="sc-itemImgWrapper">
         <img src={data.product.gallery[0]} alt="product img"></img>

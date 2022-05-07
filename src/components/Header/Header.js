@@ -29,14 +29,22 @@ export default function Header() {
                     cat.name === title ? "selected" : ""
                   }`}
                 >
-                  <Link to={cat.name} className="navlink">
+                  <Link
+                    to={cat.name}
+                    className="navlink"
+                    onClick={() => setOrderActive(false)}
+                  >
                     {cat.name}
                   </Link>
                 </li>
               ))}
             </ul>
           </nav>
-          <Link to="/" className="header-icon">
+          <Link
+            to="/"
+            className="header-icon"
+            onClick={() => setOrderActive(false)}
+          >
             <Icon />
           </Link>
 

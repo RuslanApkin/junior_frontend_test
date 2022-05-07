@@ -1,7 +1,7 @@
 @import url("../styles/const.css");
 
 .cart-h2{
-    font-size: 2em;
+    font-size: 2rem;
     text-transform: uppercase;
-    margin: 5rem 0;
+    margin: 2.5em 0;
 }

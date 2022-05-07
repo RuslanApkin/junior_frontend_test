@@ -7,10 +7,34 @@ body {
 
 .page-wrapper{
   padding-top: 5em;
-  width: min(100vw - 15rem, 1200px);
+  width: min(100vw - 15em, 1200px);
   margin-inline: auto;
 }
 
 a, div, h1, h2, h3, span, ul {
   color: var(--c-text);
+}
+
+a {
+  text-decoration: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--c-white); 
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--c-gray); 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c-black); 
 }
