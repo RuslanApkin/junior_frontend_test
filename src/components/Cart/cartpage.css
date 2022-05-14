@@ -5,3 +5,62 @@
     text-transform: uppercase;
     margin: 2.5em 0;
 }
+
+.ci-itemWrapper {
+    border-top: 1px solid var(--c-gray);
+    padding: 1.5rem 0;
+}
+
+.ci-itemInfo {
+    max-width: none;
+}
+
+.ci-itemBrand, .ci-itemName {
+    font-size: 1.875rem;
+    font-style: normal;
+    white-space: nowrap;
+}
+
+.ci-itemBrand {
+    font-weight: 600;
+}
+
+.ci-itemName {
+    margin: 0.5em 0 0 0;
+    font-weight: 400;
+}
+
+.ci-itemPrice {
+    font-weight: 700;
+    font-size: 1.5rem;
+    margin: 0.5em 0;
+}
+
+.ci-itemQtyBtn {
+    font-size: 1.875rem;
+}
+
+.ci-itemQtyValue {
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.ci-itemWraImgWrapper {
+    height: 100%;
+}
+
+.ci-itemImgWrapper img {
+    width: 8.75rem;
+    height: 100%;
+    object-fit: contain;
+}
+
+.ci-productLink {
+    width: min-content;
+    transition: all 200ms ease-in-out;
+}
+
+.ci-productLink:hover {
+    opacity: 50%;
+
+}

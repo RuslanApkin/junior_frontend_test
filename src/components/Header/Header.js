@@ -32,7 +32,10 @@ export default function Header() {
                   <Link
                     to={cat.name}
                     className="navlink"
-                    onClick={() => setOrderActive(false)}
+                    onClick={() => {
+                      setOrderActive(false);
+                      document.body.classList.remove("no-scroll");
+                    }}
                   >
                     {cat.name}
                   </Link>
@@ -43,7 +46,10 @@ export default function Header() {
           <Link
             to="/"
             className="header-icon"
-            onClick={() => setOrderActive(false)}
+            onClick={() => {
+              setOrderActive(false);
+              document.body.classList.remove("no-scroll");
+            }}
           >
             <Icon />
           </Link>
@@ -62,6 +68,7 @@ export default function Header() {
         orderActive={orderActive}
         setOrderActive={setOrderActive}
         state={state}
+        dispatch={dispatch}
       />
     </>
   );

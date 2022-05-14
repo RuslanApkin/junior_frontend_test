@@ -129,13 +129,15 @@
     box-sizing: border-box;
     position: relative;
     margin-right: 0.5em;
+    font-size: 1rem;
+    line-height: 1.25em;
 }
 
 .attr-itemText {
     font-style: italic;
     text-transform: uppercase;
     width: 4em;
-    padding: 1em 0;
+    padding: 0.75em 0;
     text-align: center;
 }
 

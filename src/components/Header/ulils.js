@@ -69,7 +69,15 @@ export const ShoppingCartIcon = ({ orderActive, setOrderActive, state }) => {
   return (
     <>
       <div className="sc-wrapper">
-        <button className="sc-btn" onClick={() => setOrderActive(!orderActive)}>
+        <button
+          className="sc-btn"
+          onClick={() => {
+            orderActive
+              ? document.body.classList.remove("no-scroll")
+              : document.body.classList.add("no-scroll");
+            setOrderActive(!orderActive);
+          }}
+        >
           <CartIcon color="#1D1F22" wh="20px" />
           <span
             className={`sc-notification ${
@@ -84,14 +92,22 @@ export const ShoppingCartIcon = ({ orderActive, setOrderActive, state }) => {
   );
 };
 
-export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
+export const ShoppingCart = ({
+  orderActive,
+  setOrderActive,
+  state,
+  dispatch,
+}) => {
   return (
     <>
       {orderActive ? (
         <div className="sc-orderWrapper">
           <span
             className="sc-orderCover"
-            onClick={() => setOrderActive(!orderActive)}
+            onClick={() => {
+              setOrderActive(false);
+              document.body.classList.remove("no-scroll");
+            }}
           ></span>
           <div className="page-wrapper cs-orderWrapper">
             <div className="sc-order">
@@ -107,6 +123,7 @@ export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
                           item={item}
                           curr={state.currency}
                           setOrderActive={setOrderActive}
+                          dispatch={dispatch}
                         />
                       ))}
                     </ul>
@@ -119,14 +136,20 @@ export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
                     <Link
                       to="all/cart"
                       className="cs-orderBtnBag"
-                      onClick={() => setOrderActive(false)}
+                      onClick={() => {
+                        setOrderActive(false);
+                        document.body.classList.remove("no-scroll");
+                      }}
                     >
                       View bag
                     </Link>
                     <Link
                       to="all/cart"
                       className="cs-orderBtnCheck"
-                      onClick={() => setOrderActive(false)}
+                      onClick={() => {
+                        setOrderActive(false);
+                        document.body.classList.remove("no-scroll");
+                      }}
                     >
                       Check out
                     </Link>
@@ -143,8 +166,7 @@ export const ShoppingCart = ({ orderActive, setOrderActive, state }) => {
   );
 };
 
-export const SCItem = ({ item, curr, setOrderActive }) => {
-  const [state, dispatch] = useContext(Context);
+export const SCItem = ({ item, curr, setOrderActive, dispatch }) => {
   const { loading, error, data } = useQuery(GETPRODUCT, {
     variables: { id: item.id },
   });
