@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import "./header.css";
 import "./cart.css";
 import logo from "../../img/a-logo.svg";
-import CartIcon from "../Shared/CartIcon";
+import { CartIcon } from "../Shared/Icons";
 import { useQuery } from "@apollo/client";
 import { Context } from "../Store";
 import { GETCURR, GETPRODUCT } from "../Shared/shared";

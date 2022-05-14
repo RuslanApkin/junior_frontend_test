@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 
 export default function CartPage() {
   const [state, dispatch] = useContext(Context);
-  useEffect(() => {});
   console.log(state);
   return (
     <div className="page-wrapper">

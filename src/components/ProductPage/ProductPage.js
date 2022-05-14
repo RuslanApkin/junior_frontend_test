@@ -8,9 +8,19 @@ import { GETPRODUCT } from "../Shared/shared";
 export default function ProductPage() {
   let urlId = useLocation();
   urlId = urlId.pathname.split("/")[2];
-  const { loading, error, data } = useQuery(GETPRODUCT, {
+  const { loading, error, data, refetch } = useQuery(GETPRODUCT, {
     variables: { id: urlId },
   });
+  useEffect(() => {
+    refetch({ id: urlId });
+    if (data) {
+      const initialValues = {};
+      data.product.attributes.map(
+        (attr) => (initialValues[attr.id] = attr.items[0].value)
+      );
+      setForm(initialValues);
+    }
+  }, [loading]);
   const [imageUrl, setImage] = useState();
   const [formValues, setForm] = useState();
   const [added, setAdded] = useState("");
@@ -26,19 +36,9 @@ export default function ProductPage() {
     setAdded(true);
     setTimeout(() => {
       setAdded(false);
-    }, 1000);
+    }, 1500);
     e.preventDefault();
   };
-
-  useEffect(() => {
-    if (data) {
-      const initialValues = {};
-      data.product.attributes.map(
-        (attr) => (initialValues[attr.id] = attr.items[0].value)
-      );
-      setForm(initialValues);
-    }
-  }, [loading]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
