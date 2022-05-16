@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./header.css";
 import "./cart.css";
 import logo from "../../img/a-logo.svg";
@@ -98,6 +98,7 @@ export const ShoppingCart = ({
   state,
   dispatch,
 }) => {
+  const [price, setPrice] = useState(0);
   return (
     <>
       {orderActive ? (
@@ -124,13 +125,18 @@ export const ShoppingCart = ({
                           curr={state.currency}
                           setOrderActive={setOrderActive}
                           dispatch={dispatch}
+                          price={price}
+                          setPrice={setPrice}
                         />
                       ))}
                     </ul>
                   </div>
                   <div className="sc-orderTotal">
                     <span>Total</span>
-                    <span>$100.00</span>
+                    <span>
+                      {state.currency.symbol}
+                      {price}
+                    </span>
                   </div>
                   <div className="sc-orderBtnWrapper">
                     <Link
@@ -166,10 +172,39 @@ export const ShoppingCart = ({
   );
 };
 
-export const SCItem = ({ item, curr, setOrderActive, dispatch }) => {
+export const SCItem = ({
+  item,
+  curr,
+  setOrderActive,
+  dispatch,
+  price,
+  setPrice,
+}) => {
   const { loading, error, data } = useQuery(GETPRODUCT, {
     variables: { id: item.id },
   });
+
+  useEffect(() => {
+    console.log("hello");
+    setPrice((price) => 0);
+    console.log(price);
+  }, [curr.label, item.qty]);
+
+  useEffect(() => {
+    if (data) {
+      console.log();
+      setPrice(
+        (price) =>
+          price +
+          data.product.prices.find(
+            ({ currency }) => curr.label === currency.label
+          ).amount *
+            item.qty
+      );
+      console.log(price);
+    }
+  }, [loading, curr.label, item.qty]);
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
