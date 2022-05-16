@@ -8,11 +8,11 @@ import { GETPRODUCT } from "../Shared/shared";
 export default function ProductPage() {
   let urlId = useLocation();
   urlId = urlId.pathname.split("/")[2];
-  const { loading, error, data, refetch } = useQuery(GETPRODUCT, {
+  const { loading, error, data } = useQuery(GETPRODUCT, {
     variables: { id: urlId },
+    fetchPolicy: "network-only",
   });
   useEffect(() => {
-    refetch({ id: urlId });
     if (data) {
       const initialValues = {};
       data.product.attributes.map(

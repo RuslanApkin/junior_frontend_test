@@ -12,64 +12,67 @@ export default function Header() {
   title = !title ? "all" : title;
   const [orderActive, setOrderActive] = useState(false);
   const { loading, error, data } = useQuery(GETCATEGORIES);
-  const [state, dispatch] = useContext(Context);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <></>;
   if (error) return <p>Error :(</p>;
 
   return (
-    <>
-      <header className="header">
-        <div className="header-wrapper">
-          <nav>
-            <ul className="header-ul">
-              {data.categories.map((cat) => (
-                <li
-                  className={`header-li ${
-                    cat.name === title ? "selected" : ""
-                  }`}
-                >
-                  <Link
-                    to={cat.name}
-                    className="navlink"
-                    onClick={() => {
-                      setOrderActive(false);
-                      document.body.classList.remove("no-scroll");
-                    }}
-                  >
-                    {cat.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <Link
-            to="/"
-            className="header-icon"
-            onClick={() => {
-              setOrderActive(false);
-              document.body.classList.remove("no-scroll");
-            }}
-          >
-            <Icon />
-          </Link>
+    <Context.Consumer>
+      {([state, dispatch]) => (
+        <>
+          <header className="header">
+            <div className="header-wrapper">
+              <nav>
+                <ul className="header-ul">
+                  {data.categories.map((cat) => (
+                    <li
+                      className={`header-li ${
+                        cat.name === title ? "selected" : ""
+                      }`}
+                    >
+                      <Link
+                        to={cat.name}
+                        className="navlink"
+                        onClick={() => {
+                          setOrderActive(false);
+                          document.body.classList.remove("no-scroll");
+                        }}
+                      >
+                        {cat.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <Link
+                to="/"
+                className="header-icon"
+                onClick={() => {
+                  setOrderActive(false);
+                  document.body.classList.remove("no-scroll");
+                }}
+              >
+                <Icon />
+              </Link>
 
-          <div className="right-wrapper">
-            <Currency />
-            <ShoppingCartIcon
-              orderActive={orderActive}
-              setOrderActive={setOrderActive}
-              state={state}
-            />
-          </div>
-        </div>
-      </header>
-      <ShoppingCart
-        orderActive={orderActive}
-        setOrderActive={setOrderActive}
-        state={state}
-        dispatch={dispatch}
-      />
-    </>
+              <div className="right-wrapper">
+                <Currency />
+                <ShoppingCartIcon
+                  orderActive={orderActive}
+                  setOrderActive={setOrderActive}
+                  state={state}
+                />
+              </div>
+            </div>
+          </header>
+          <ShoppingCart
+            orderActive={orderActive}
+            setOrderActive={setOrderActive}
+            state={state}
+            dispatch={dispatch}
+          />
+        </>
+      )}
+    </Context.Consumer>
   );
 }

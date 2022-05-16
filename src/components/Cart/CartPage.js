@@ -6,17 +6,20 @@ import { GETPRODUCT } from "../Shared/shared";
 import { Link } from "react-router-dom";
 
 export default function CartPage() {
-  const [state, dispatch] = useContext(Context);
-  console.log(state);
   return (
-    <div className="page-wrapper">
-      <h2 className="cart-h2">Cart</h2>
-      <ul className="sc-orderList">
-        {state.cart.map((item) => (
-          <CartItem item={item} curr={state.currency} dispatch={dispatch} />
-        ))}
-      </ul>
-    </div>
+    <Context.Consumer>
+      {([state, dispatch]) => (
+        <div className="page-wrapper">
+          {console.log([state, dispatch])}
+          <h2 className="cart-h2">Cart</h2>
+          <ul className="sc-orderList">
+            {state.cart.map((item) => (
+              <CartItem item={item} curr={state.currency} dispatch={dispatch} />
+            ))}
+          </ul>
+        </div>
+      )}
+    </Context.Consumer>
   );
 }
 

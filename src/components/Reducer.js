@@ -22,7 +22,6 @@ const Reducer = (state, action) => {
           qty: 1,
         });
 
-      console.log(JSON.stringify(cartItems));
       window.localStorage.setItem(
         "cart",
         cartItems.map((item) => JSON.stringify(item)).join(", ")
